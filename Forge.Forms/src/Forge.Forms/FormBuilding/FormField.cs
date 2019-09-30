@@ -40,6 +40,7 @@ namespace Forge.Forms.FormBuilding
             base.Freeze();
             Resources.Add(nameof(Name), Name ?? LiteralValue.Null);
             Resources.Add(nameof(ToolTip), ToolTip ?? LiteralValue.Null);
+            Resources.Add(nameof(Key), new LiteralValue(Key));
 
             if (Icon != null && !(Icon is LiteralValue v && v.Value == null))
             {
