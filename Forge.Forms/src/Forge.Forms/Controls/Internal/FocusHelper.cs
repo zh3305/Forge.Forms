@@ -4,7 +4,7 @@ using System.Windows;
 namespace Forge.Forms.Controls.Internal
 {
     // Source: https://stackoverflow.com/questions/817610/wpf-and-initial-focus
-    internal static class FocusHelper
+    public static class FocusHelper
     {
         public static readonly DependencyProperty InitialFocusProperty =
             DependencyProperty.RegisterAttached(

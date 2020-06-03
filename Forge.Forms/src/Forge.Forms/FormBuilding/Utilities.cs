@@ -11,7 +11,7 @@ using Forge.Forms.Annotations;
 using Forge.Forms.DynamicExpressions;
 using Forge.Forms.DynamicExpressions.BooleanExpressions;
 using Forge.Forms.Validation;
-using MaterialDesignThemes.Wpf;
+
 
 namespace Forge.Forms.FormBuilding
 {
@@ -208,10 +208,10 @@ namespace Forge.Forms.FormBuilding
         {
             if (value is -1 || value is string s && string.Equals(s, "empty", StringComparison.OrdinalIgnoreCase))
             {
-                return new LiteralValue((PackIconKind)(-1));
+                return LiteralValue.Null;
             }
 
-            return GetResource<PackIconKind>(value, (PackIconKind)(-2), Deserializers.Enum<PackIconKind>());
+            return GetResource<object>(value, null, x=>x);
         }
 
         public static IValueProvider GetStringResource(string expression)

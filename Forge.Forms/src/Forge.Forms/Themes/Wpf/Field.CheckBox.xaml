@@ -3,11 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:defaults="clr-namespace:Forge.Forms.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.FormBuilding"
-    xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Wpf/IconStyles.xaml" />
+       
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="WpfCheckBoxPresenterTemplate" TargetType="{x:Type defaults:CheckBoxPresenter}">
@@ -16,16 +15,6 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <materialDesign:PackIcon
-                Grid.Column="0"
-                Width="24"
-                Height="24"
-                Margin="0,0,16,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Kind="{formBuilding:FormBinding Icon}"
-                Style="{StaticResource WpfColoredIconStyle}"
-                Visibility="{formBuilding:FormBinding IconVisibility}" />
             <CheckBox
                 Name="ValueHolderControl"
                 Grid.Column="1"

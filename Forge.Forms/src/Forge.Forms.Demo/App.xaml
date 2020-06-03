@@ -16,7 +16,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Pink.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Material.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/Forge.Forms.Extension;component/Themes/Material.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Wpf.xaml" />
 
                 <!--  Route View Bindings  -->
                 <ResourceDictionary Source="ViewBindings.xaml" />

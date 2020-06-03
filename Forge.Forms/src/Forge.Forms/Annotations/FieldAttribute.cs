@@ -1,5 +1,4 @@
 using System;
-using MaterialDesignThemes.Wpf;
 
 namespace Forge.Forms.Annotations
 {

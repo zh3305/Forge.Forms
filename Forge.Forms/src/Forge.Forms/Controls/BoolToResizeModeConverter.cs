@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Forge.Forms.Controls
 {
-    internal class BoolToResizeModeConverter : IValueConverter
+    public class BoolToResizeModeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

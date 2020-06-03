@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Input;
 using Forge.Forms.Annotations;
 using Forge.Forms.DynamicExpressions;
-using MaterialDesignThemes.Wpf;
 
 namespace Forge.Forms.FormBuilding.Defaults
 {
@@ -165,7 +164,8 @@ namespace Forge.Forms.FormBuilding.Defaults
                     var frameworkElement = fwContext.GetOwningElement();
                     if (frameworkElement != null && frameworkElement.CheckAccess())
                     {
-                        DialogHost.CloseDialogCommand.Execute(arg, frameworkElement);
+                        //DialogHost.CloseDialogCommand.Execute(arg, frameworkElement);
+                        Show.CloseDialog(arg, frameworkElement);
                     }
                 }
 

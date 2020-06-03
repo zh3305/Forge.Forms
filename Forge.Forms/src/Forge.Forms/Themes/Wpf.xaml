@@ -24,4 +24,16 @@
 
     <Style BasedOn="{StaticResource WpfActionPresenterStyle}" TargetType="{x:Type defaults:ActionPresenter}" />
 
+    <Style TargetType="{x:Type defaults:CardPresenter}">
+        <Setter Property="Panel.ZIndex" Value="-1" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type defaults:CardPresenter}">
+                    <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

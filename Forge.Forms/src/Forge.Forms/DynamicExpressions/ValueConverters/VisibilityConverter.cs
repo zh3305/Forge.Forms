@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using MaterialDesignThemes.Wpf;
+
 
 namespace Forge.Forms.DynamicExpressions.ValueConverters
 {
@@ -28,10 +28,6 @@ namespace Forge.Forms.DynamicExpressions.ValueConverters
                     return b ? Visibility.Visible : hidden;
                 case Visibility v:
                     return v;
-                case PackIconKind i:
-                    return i == (PackIconKind)(-2)
-                        ? hidden
-                        : Visibility.Visible;
                 default:
                     return value == null
                         ? hidden

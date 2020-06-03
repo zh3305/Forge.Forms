@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-
+﻿
 namespace Forge.Forms
 {
     /// <summary>
@@ -11,8 +10,8 @@ namespace Forge.Forms
         private string message;
         private string positiveAction = "OK";
         private string negativeAction = "CANCEL";
-        private PackIconKind? positiveActionIcon;
-        private PackIconKind? negativeActionIcon;
+        private object positiveActionIcon;
+        private object negativeActionIcon;
 
         private string title;
 
@@ -77,7 +76,7 @@ namespace Forge.Forms
         /// Gets or sets the positive action icon.
         /// Assigning null will hide the icon.
         /// </summary>
-        public PackIconKind? PositiveActionIcon
+        public object PositiveActionIcon
         {
             get => positiveActionIcon;
             set
@@ -110,7 +109,7 @@ namespace Forge.Forms
         /// Gets or sets the negative action icon.
         /// Assigning null will hide the icon.
         /// </summary>
-        public PackIconKind? NegativeActionIcon
+        public object NegativeActionIcon
         {
             get => negativeActionIcon;
             set

@@ -1,5 +1,4 @@
 ﻿using Forge.Forms.Annotations;
-using MaterialDesignThemes.Wpf;
 
 namespace Forge.Forms
 {
@@ -19,7 +18,7 @@ namespace Forge.Forms
         Icon = "{Binding PositiveActionIcon}")]
     public sealed class Prompt<T> : DialogBase
     {
-        private PackIconKind? icon;
+        private object icon;
         private string name;
         private string toolTip;
         private T value;
@@ -72,7 +71,7 @@ namespace Forge.Forms
             }
         }
 
-        public PackIconKind? Icon
+        public object Icon
         {
             get => icon;
             set

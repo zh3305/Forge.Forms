@@ -4,8 +4,7 @@
     xmlns:controls="clr-namespace:Forge.Forms.Controls"
     xmlns:defaults="clr-namespace:Forge.Forms.FormBuilding.Defaults"
     xmlns:formBuilding="clr-namespace:Forge.Forms.FormBuilding"
-    xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Elements/Text.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Elements/Image.xaml" />
@@ -74,17 +73,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type defaults:CardPresenter}">
-        <Setter Property="Panel.ZIndex" Value="-1" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type defaults:CardPresenter}">
-                    <materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+
 
     <Style BasedOn="{StaticResource DynamicFormStyle}" TargetType="{x:Type controls:DynamicForm}" />
 </ResourceDictionary>

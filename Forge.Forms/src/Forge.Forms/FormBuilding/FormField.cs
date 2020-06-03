@@ -1,6 +1,6 @@
 using System.Windows;
 using Forge.Forms.DynamicExpressions;
-using MaterialDesignThemes.Wpf;
+
 
 namespace Forge.Forms.FormBuilding
 {
@@ -50,7 +50,7 @@ namespace Forge.Forms.FormBuilding
             else
             {
                 Resources.Add(iconVisibility, new LiteralValue(Visibility.Collapsed));
-                Resources.Add(nameof(Icon), new LiteralValue((PackIconKind)(-2)));
+                Resources.Add(nameof(Icon), LiteralValue.Null);
             }
         }
     }
