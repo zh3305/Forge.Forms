@@ -1,0 +1,9 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.Extension;component/Themes/Material.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.Extension;component/Themes/Metro.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
