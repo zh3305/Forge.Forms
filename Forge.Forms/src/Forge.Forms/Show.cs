@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using Forge.Forms.Controls;
 using Forge.Forms.FormBuilding;
@@ -89,7 +90,15 @@ namespace Forge.Forms
 
         public static bool CloseDialog(object identifer,FrameworkElement dialog)
         {
-            return DialogModelHostFactory.CloseModelHost(identifer);
+            if ( DialogModelHostFactory.CloseModelHost(identifer, dialog))
+            {
+                return true;
+            }
+            if(WindowModelHostFactory.CloseModelHost(identifer,dialog))
+            {
+                return true;
+            }
+            return false;
         }
     }
 
@@ -105,7 +114,7 @@ namespace Forge.Forms
     public interface IModelHostFactory
     {
         IModelHost CreateModelHost(object identifier,object modelContext, DialogOptions dialogOptions);
-        bool CloseModelHost(object Identifier);
+        bool CloseModelHost(object Identifier, FrameworkElement dialog);
     }
 
     public static class ModelHostExtensions
@@ -161,6 +170,8 @@ namespace Forge.Forms
         private readonly object dialogIdentifier;
         private readonly DialogOptions options;
 
+        private Window window;
+
         public DialogModelHost(object dialogIdentifier, object context, DialogOptions options)
         {
             this.context = context;
@@ -194,24 +205,72 @@ namespace Forge.Forms
                 lastActionParameter = e.ActionContext.ActionParameter;
             };
 
-            var window = new Window();
+            window = new Window();
+            window.SizeToContent = SizeToContent.WidthAndHeight;
             window.Content = wrapper;
+            window.Closed += Window_Closed;
+            Window onwnerWindow = null;
+            foreach(var item in Application.Current.Windows)
+            {
+                if(item is Window w && w.IsActive)
+                {
+                    onwnerWindow = w;
+                }
+            }
+            if (onwnerWindow != null)
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.Owner = onwnerWindow;
+            }
+            else
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
             window.ShowDialog();
             var result = new DialogResult(wrapper.Form.Value, lastAction, lastActionParameter);
             return Task.FromResult(result);
+        }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            window.Closed -= Window_Closed;
+            window = null;
+        }
+
+        public void Close()
+        {
+            window?.Close();
         }
     }
 
     internal class DialogModelHostFactory : IModelHostFactory
     {
+        private static readonly object nullIdentifier = new object();
+        private readonly Dictionary<object, DialogModelHost> _dialogs = new Dictionary<object, DialogModelHost>();
         public IModelHost CreateModelHost(object identifier, object modelContext, DialogOptions dialogOptions)
         {
-            return new DialogModelHost(identifier, modelContext, dialogOptions);
+            CloseByIdentifier(identifier);
+            var host = new DialogModelHost(identifier, modelContext, dialogOptions);
+            _dialogs.Add(identifier ?? nullIdentifier, host);
+            return host;
+
         }
 
-        public bool CloseModelHost(object Identifier)
+        public bool CloseModelHost(object identifier, FrameworkElement dialog)
         {
-            //throw new System.NotImplementedException();
+
+            return CloseByIdentifier(identifier);
+        }
+
+        private bool CloseByIdentifier(object identifier)
+        {
+            var id = identifier ?? nullIdentifier;
+            if (_dialogs.TryGetValue(id, out var host))
+            {
+                host.Close();
+                _dialogs.Remove(id);
+                return true;
+            }
             return false;
         }
     }
