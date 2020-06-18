@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Forge.Forms.Controls;
@@ -88,13 +90,13 @@ namespace Forge.Forms
             return DialogModelHostFactory.CreateModelHost(dialogIdentifier, context, new DialogOptions { Width = width });
         }
 
-        public static bool CloseDialog(object identifer,FrameworkElement dialog)
+        public static bool CloseDialog(object arg,FrameworkElement dialog)
         {
-            if ( DialogModelHostFactory.CloseModelHost(identifer, dialog))
+            if ( DialogModelHostFactory.CloseModelHost(arg, dialog))
             {
                 return true;
             }
-            if(WindowModelHostFactory.CloseModelHost(identifer,dialog))
+            if(WindowModelHostFactory.CloseModelHost(arg, dialog))
             {
                 return true;
             }
@@ -114,7 +116,7 @@ namespace Forge.Forms
     public interface IModelHostFactory
     {
         IModelHost CreateModelHost(object identifier,object modelContext, DialogOptions dialogOptions);
-        bool CloseModelHost(object Identifier, FrameworkElement dialog);
+        bool CloseModelHost(object arg, FrameworkElement dialog);
     }
 
     public static class ModelHostExtensions
@@ -171,6 +173,7 @@ namespace Forge.Forms
         private readonly DialogOptions options;
 
         private Window window;
+        private DynamicFormWrapper wrapper;
 
         public DialogModelHost(object dialogIdentifier, object context, DialogOptions options)
         {
@@ -198,7 +201,7 @@ namespace Forge.Forms
         {
             object lastAction = null;
             object lastActionParameter = null;
-            var wrapper = new DynamicFormWrapper(model, context, options);
+            wrapper = new DynamicFormWrapper(model, context, options);
             wrapper.Form.OnAction += (s, e) =>
             {
                 lastAction = e.ActionContext.Action;
@@ -235,43 +238,51 @@ namespace Forge.Forms
         {
             window.Closed -= Window_Closed;
             window = null;
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Close()
+        public bool CloseIfMatched(FrameworkElement form,object arg)
         {
-            window?.Close();
-        }
+            if(window == null)
+            {
+                return false;
+            }
+            if (window.Content == form || wrapper.Content == form)
+            {
+                window.Close();
+                return true;
+            }
+            return false;
+        }        
+        public event EventHandler Closed;
     }
 
     internal class DialogModelHostFactory : IModelHostFactory
     {
-        private static readonly object nullIdentifier = new object();
-        private readonly Dictionary<object, DialogModelHost> _dialogs = new Dictionary<object, DialogModelHost>();
+        private readonly List<DialogModelHost> _dialogs = new List<DialogModelHost>();
         public IModelHost CreateModelHost(object identifier, object modelContext, DialogOptions dialogOptions)
         {
-            CloseByIdentifier(identifier);
             var host = new DialogModelHost(identifier, modelContext, dialogOptions);
-            _dialogs.Add(identifier ?? nullIdentifier, host);
+            _dialogs.Add(host);
+            host.Closed += Host_Closed;
             return host;
-
         }
 
-        public bool CloseModelHost(object identifier, FrameworkElement dialog)
+        private void Host_Closed(object sender, EventArgs e)
         {
-
-            return CloseByIdentifier(identifier);
-        }
-
-        private bool CloseByIdentifier(object identifier)
-        {
-            var id = identifier ?? nullIdentifier;
-            if (_dialogs.TryGetValue(id, out var host))
+            var host = sender as DialogModelHost;
+            if(host!=null)
             {
-                host.Close();
-                _dialogs.Remove(id);
-                return true;
+                host.Closed -= Host_Closed;
+                _dialogs.Remove(host);
             }
-            return false;
+        }
+
+        public bool CloseModelHost(object arg, FrameworkElement dialog)
+        {
+            var closed = _dialogs.ToArray().Select(x => x.CloseIfMatched(dialog, arg))
+                .ToList();
+            return closed.Any(x=>x);
         }
     }
 }
