@@ -475,5 +475,7 @@ namespace Forge.Forms.Controls
         {
             OnAction?.Invoke(this, new ActionEventArgs(actionContext));
         }
+
+        public IEnumerable<KeyValuePair<string, IDataBindingProvider>> FieldValueBindingProviders => DataBindingProviders;
     }
 }
