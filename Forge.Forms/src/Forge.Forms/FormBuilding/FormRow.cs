@@ -57,20 +57,20 @@ namespace Forge.Forms.FormBuilding
         public List<FormElement> Elements { get; }
 
         // This is not ready for public API
-        internal ILayout Layout { get; }
+        public ILayout Layout { get; }
     }
 
     /// <summary>
     /// Supports custom layout of form elements.
     /// </summary>
-    internal interface ILayout
+    public interface ILayout
     {
         IEnumerable<FormElement> GetElements();
 
         FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder);
     }
 
-    internal class GridLayout : ILayout
+    public class GridLayout : ILayout
     {
         public GridLayout(IEnumerable<GridColumnLayout> columns, double top, double bottom)
         {
@@ -147,7 +147,7 @@ namespace Forge.Forms.FormBuilding
         }
     }
 
-    internal class Layout : ILayout
+    public class Layout : ILayout
     {
         public Layout(IEnumerable<ILayout> children)
             : this(children, new Thickness(), VerticalAlignment.Stretch, HorizontalAlignment.Stretch)
@@ -190,7 +190,7 @@ namespace Forge.Forms.FormBuilding
         }
     }
 
-    internal class GridColumnLayout : ILayout
+    public class GridColumnLayout : ILayout
     {
         public GridColumnLayout(ILayout child, double width, double left, double right)
         {
@@ -216,7 +216,7 @@ namespace Forge.Forms.FormBuilding
         }
     }
 
-    internal class FormElementLayout : ILayout
+    public class FormElementLayout : ILayout
     {
         public FormElementLayout(FormElement element)
         {
@@ -233,7 +233,7 @@ namespace Forge.Forms.FormBuilding
         }
     }
 
-    internal class InlineLayout : ILayout
+    public class InlineLayout : ILayout
     {
         public InlineLayout(IEnumerable<ILayout> elements, double top, double bottom)
         {
