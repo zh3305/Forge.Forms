@@ -327,7 +327,7 @@ namespace Forge.Forms.Controls
                     // New API to allow custom layout logic
                     if (container.Layout != null)
                     {
-                        var root = container.Layout.Build(ElementBuilder);
+                        var root = container.Layout.Build(ElementBuilder, ResourceContext, formDefinition.Resources);
                         Grid.SetRow(root, rowPointer);
                         Grid.SetRowSpan(root, row.RowSpan);
                         Grid.SetColumn(root, container.Column);

@@ -340,7 +340,7 @@ namespace Forge.Forms.FormBuilding
                 return element;
             }
 
-            ILayout Terminal(XElement element)
+            BaseLayout Terminal(XElement element)
             {
                 var elementName = element.Name.LocalName.ToLower();
                 FormElement formElement;
@@ -584,7 +584,8 @@ namespace Forge.Forms.FormBuilding
                     child,
                     Utilities.ParseDouble(element.TryGetAttribute("width"), 1d),
                     Utilities.ParseDouble(element.TryGetAttribute("left"), 0d),
-                    Utilities.ParseDouble(element.TryGetAttribute("right"), 0d));
+                    Utilities.ParseDouble(element.TryGetAttribute("right"), 0d))
+                    .WithBaseValueProvider(element);
             }
 
             GridLayout Grid(XElement element)
@@ -592,7 +593,8 @@ namespace Forge.Forms.FormBuilding
                 return new GridLayout(
                     element.Elements().Select(Column),
                     Utilities.ParseDouble(element.TryGetAttribute("top"), 0d),
-                    Utilities.ParseDouble(element.TryGetAttribute("bottom"), 0d));
+                    Utilities.ParseDouble(element.TryGetAttribute("bottom"), 0d))
+                    .WithBaseValueProvider(element);
             }
 
             InlineLayout Inline(XElement element)
@@ -600,10 +602,11 @@ namespace Forge.Forms.FormBuilding
                 return new InlineLayout(
                     element.Elements().Select(Terminal),
                     Utilities.ParseDouble(element.TryGetAttribute("top"), 0d),
-                    Utilities.ParseDouble(element.TryGetAttribute("bottom"), 0d));
+                    Utilities.ParseDouble(element.TryGetAttribute("bottom"), 0d))
+                    .WithBaseValueProvider(element);
             }
 
-            ILayout Row(XElement element)
+            BaseLayout Row(XElement element)
             {
                 if (!string.Equals(element.Name.LocalName, "row", StringComparison.OrdinalIgnoreCase))
                 {
@@ -617,7 +620,7 @@ namespace Forge.Forms.FormBuilding
                     return Grid(element);
                 }
 
-                return Inline(element);
+                return Inline(element).WithBaseValueProvider(element);
             }
 
             Layout Layout(XElement element)

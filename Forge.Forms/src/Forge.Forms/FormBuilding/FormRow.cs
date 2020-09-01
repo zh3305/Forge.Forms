@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Xml.Linq;
 using Forge.Forms.Controls.Internal;
+using Forge.Forms.DynamicExpressions;
+using Forge.Forms.DynamicExpressions.ValueConverters;
 
 namespace Forge.Forms.FormBuilding
 {
@@ -66,13 +70,60 @@ namespace Forge.Forms.FormBuilding
     public interface ILayout
     {
         IEnumerable<FormElement> GetElements();
+        
 
-        FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder);
+        FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources);
     }
 
-    public class GridLayout : ILayout
+    public abstract class BaseLayout : ILayout
     {
-        public GridLayout(IEnumerable<GridColumnLayout> columns, double top, double bottom)
+        protected BaseLayout()
+        {
+            IsVisible = LiteralValue.True;
+        }
+        /// <summary>
+        /// Gets or sets the bool resource that determines whether this element will be visible.
+        /// </summary>
+        public IValueProvider IsVisible { get; set; }
+
+        public abstract FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources);
+        public abstract IEnumerable<FormElement> GetElements();
+        protected virtual FrameworkElement UpdateBindings(FrameworkElement element,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
+        {
+            if (IsVisible != null)
+            {
+                var visibility = IsVisible.ProvideValue(context);
+                switch (visibility)
+                {
+                    case bool b:
+                        element.Visibility = b ? Visibility.Visible : Visibility.Collapsed;
+                        break;
+                    case Visibility v:
+                        element.Visibility = v;
+                        break;
+                    case BindingBase bindingBase:
+                        if (bindingBase is Binding binding)
+                        {
+                            binding.Converter = new BoolOrVisibilityConverter(binding.Converter);
+                        }
+
+                        BindingOperations.SetBinding(element, UIElement.VisibilityProperty, bindingBase);
+                        break;
+                }
+            }
+            return element;
+        }
+    }
+
+    public class GridLayout : BaseLayout
+    {
+        public GridLayout(IEnumerable<GridColumnLayout> columns, double top, double bottom) : base()
         {
             Columns = columns?.ToList() ?? new List<GridColumnLayout>(0);
             Top = top;
@@ -85,9 +136,11 @@ namespace Forge.Forms.FormBuilding
 
         public double Bottom { get; }
 
-        public IEnumerable<FormElement> GetElements() => Columns.SelectMany(c => c.GetElements());
+        public override IEnumerable<FormElement> GetElements() => Columns.SelectMany(c => c.GetElements());
 
-        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        public override FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
         {
             ColumnDefinition GetDefinition(double size)
             {
@@ -131,7 +184,7 @@ namespace Forge.Forms.FormBuilding
                 }
 
                 grid.ColumnDefinitions.Add(GetDefinition(column.Width));
-                var child = column.Build(elementBuilder);
+                var child = column.Build(elementBuilder,context,formResources);
                 Grid.SetColumn(child, colnum);
                 grid.Children.Add(child);
                 colnum++;
@@ -143,18 +196,18 @@ namespace Forge.Forms.FormBuilding
                 }
             }
 
-            return grid;
+            return UpdateBindings(grid,context,formResources);
         }
     }
 
-    public class Layout : ILayout
+    public class Layout : BaseLayout
     {
         public Layout(IEnumerable<ILayout> children)
             : this(children, new Thickness(), VerticalAlignment.Stretch, HorizontalAlignment.Stretch)
         {
         }
 
-        public Layout(IEnumerable<ILayout> children, Thickness margin, VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment)
+        public Layout(IEnumerable<ILayout> children, Thickness margin, VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment) : base()
         {
             Children = children?.ToList() ?? new List<ILayout>(0);
             Margin = margin;
@@ -170,9 +223,11 @@ namespace Forge.Forms.FormBuilding
 
         public HorizontalAlignment HorizontalAlignment { get; }
 
-        public IEnumerable<FormElement> GetElements() => Children.SelectMany(c => c.GetElements());
+        public override IEnumerable<FormElement> GetElements() => Children.SelectMany(c => c.GetElements());
 
-        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        public override FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
         {
             var panel = new StackPanel
             {
@@ -183,16 +238,16 @@ namespace Forge.Forms.FormBuilding
 
             foreach (var child in Children)
             {
-                panel.Children.Add(child.Build(elementBuilder));
+                panel.Children.Add(child.Build(elementBuilder,context,formResources));
             }
 
-            return panel;
+            return UpdateBindings(panel,context,formResources);
         }
     }
 
-    public class GridColumnLayout : ILayout
+    public class GridColumnLayout : BaseLayout
     {
-        public GridColumnLayout(ILayout child, double width, double left, double right)
+        public GridColumnLayout(ILayout child, double width, double left, double right) : base()
         {
             Child = child;
             Width = width;
@@ -208,34 +263,38 @@ namespace Forge.Forms.FormBuilding
 
         public double Right { get; }
 
-        public IEnumerable<FormElement> GetElements() => Child.GetElements();
+        public override IEnumerable<FormElement> GetElements() => Child.GetElements();
 
-        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        public override FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
         {
-            return Child.Build(elementBuilder);
+            return Child.Build(elementBuilder,context,formResources);
         }
     }
 
-    public class FormElementLayout : ILayout
+    public class FormElementLayout : BaseLayout
     {
-        public FormElementLayout(FormElement element)
+        public FormElementLayout(FormElement element) : base()
         {
             Element = element;
         }
 
         public FormElement Element { get; }
 
-        public IEnumerable<FormElement> GetElements() => new[] { Element };
+        public override IEnumerable<FormElement> GetElements() => new[] { Element };
 
-        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        public override FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
         {
             return elementBuilder(Element);
         }
     }
 
-    public class InlineLayout : ILayout
+    public class InlineLayout : BaseLayout
     {
-        public InlineLayout(IEnumerable<ILayout> elements, double top, double bottom)
+        public InlineLayout(IEnumerable<ILayout> elements, double top, double bottom):base()
         {
             Elements = elements?.ToList() ?? new List<ILayout>(0);
             Top = top;
@@ -248,9 +307,11 @@ namespace Forge.Forms.FormBuilding
 
         public double Bottom { get; }
 
-        public IEnumerable<FormElement> GetElements() => Elements.SelectMany(e => e.GetElements());
+        public override IEnumerable<FormElement> GetElements() => Elements.SelectMany(e => e.GetElements());
 
-        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        public override FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder,
+            IResourceContext context,
+            IDictionary<string, IValueProvider> formResources)
         {
             var panel = new ActionPanel
             {
@@ -267,11 +328,25 @@ namespace Forge.Forms.FormBuilding
                 }
                 else
                 {
-                    panel.Children.Add(element.Build(elementBuilder));
+                    panel.Children.Add(element.Build(elementBuilder,context,formResources));
                 }
             }
 
-            return panel;
+            return UpdateBindings(panel,context,formResources);
+        }
+    }
+
+    public static class LayoutExtensions
+    {
+        public static TLayout WithBaseValueProvider<TLayout>(this TLayout layout,XElement xElement)
+            where TLayout : BaseLayout
+        {
+            var definition = xElement.TryGetAttribute("visible");
+            if (definition != null && layout != null)
+            {
+                layout.IsVisible = Utilities.GetResource<bool>(definition, true, Deserializers.Boolean);
+            }
+            return layout;
         }
     }
 }
