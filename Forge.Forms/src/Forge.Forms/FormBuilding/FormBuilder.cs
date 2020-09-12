@@ -629,7 +629,8 @@ namespace Forge.Forms.FormBuilding
                     element.Elements().Select(Row),
                     Utilities.ParseThickness(element.TryGetAttribute("margin")),
                     Utilities.TryParse(element.TryGetAttribute("valign"), VerticalAlignment.Stretch),
-                    Utilities.TryParse(element.TryGetAttribute("align"), HorizontalAlignment.Stretch));
+                    Utilities.TryParse(element.TryGetAttribute("align"), HorizontalAlignment.Stretch))
+                    .WithBaseValueProvider(element);
             }
 
             
