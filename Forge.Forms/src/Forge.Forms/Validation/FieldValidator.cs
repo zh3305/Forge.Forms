@@ -36,7 +36,7 @@ namespace Forge.Forms.Validation
         public sealed override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
 
-            if (value == null && NullValueValidation == NullValueValidateAction.AlwaysTrue)
+            if ((value == null || string.Empty.Equals(value))  && NullValueValidation == NullValueValidateAction.AlwaysTrue)
             {
                 return ValidationResult.ValidResult;
             }
