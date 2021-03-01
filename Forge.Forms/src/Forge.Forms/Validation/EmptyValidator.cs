@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -23,8 +24,8 @@ namespace Forge.Forms.Validation
                     return true;
                 case string s:
                     return s.Length == 0;
-                case IEnumerable<object> e:
-                    return !e.Any();
+                case IEnumerable e:
+                    return e.GetEnumerator().MoveNext();
                 default:
                     return true;
             }
