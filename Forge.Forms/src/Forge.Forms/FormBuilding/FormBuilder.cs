@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml.Linq;
 using Forge.Forms.Annotations;
 using Forge.Forms.DynamicExpressions;
@@ -601,6 +602,22 @@ namespace Forge.Forms.FormBuilding
                     Utilities.ParseDouble(element.TryGetAttribute("bottom"), 0d));
             }
 
+            TabItemLayout TabItem(XElement element)
+            {
+                return new TabItemLayout(
+                    element.TryGetAttribute("header"),
+                    Layout(element));
+            }
+
+            TabLayout TabControl(XElement element)
+            {
+                return new TabLayout(
+                    element.Elements().Select(TabItem),
+                    Utilities.TryParse<Dock>(element.TryGetAttribute("tabStripPlacement"), Dock.Top),
+                    Utilities.ParseNullableDouble(element.TryGetAttribute("minHeight")),
+                    Utilities.ParseNullableDouble(element.TryGetAttribute("maxHeight")));
+            }
+
             ILayout Row(XElement element)
             {
                 if (!string.Equals(element.Name.LocalName, "row", StringComparison.OrdinalIgnoreCase))
@@ -618,10 +635,21 @@ namespace Forge.Forms.FormBuilding
                 return Inline(element);
             }
 
+            ILayout Tabs(XElement element)
+            {
+                if (string.Equals(element.Name.LocalName, "tabs", StringComparison.OrdinalIgnoreCase) &&
+                    element.Elements().All(e => string.Equals(e.Name.LocalName, "tab", StringComparison.OrdinalIgnoreCase)))
+                {
+                    return TabControl(element);
+                }
+
+                return Row(element);
+            }
+
             Layout Layout(XElement element)
             {
                 return new Layout(
-                    element.Elements().Select(Row),
+                    element.Elements().Select(Tabs),
                     Utilities.ParseThickness(element.TryGetAttribute("margin")),
                     Utilities.TryParse(element.TryGetAttribute("valign"), VerticalAlignment.Stretch),
                     Utilities.TryParse(element.TryGetAttribute("align"), HorizontalAlignment.Stretch),

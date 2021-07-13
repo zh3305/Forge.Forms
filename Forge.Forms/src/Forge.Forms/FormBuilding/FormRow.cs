@@ -216,6 +216,69 @@ namespace Forge.Forms.FormBuilding
         }
     }
 
+    internal class TabLayout : ILayout
+    {
+        public TabLayout(
+            IEnumerable<TabItemLayout> tabItems,
+            Dock tabStripPlacement,
+            double? minHeight,
+            double? maxHeight)
+        {
+            TabItems = tabItems?.ToList() ?? new List<TabItemLayout>(0);
+            TabStripPlacement = tabStripPlacement;
+            MinHeight = minHeight;
+            MaxHeight = maxHeight;
+        }
+
+        public List<TabItemLayout> TabItems { get; set; }
+        public Dock TabStripPlacement { get; set; }
+        public double? MinHeight { get; set; }
+        public double? MaxHeight { get; set; }
+
+        public IEnumerable<FormElement> GetElements() => TabItems.SelectMany(c => c.GetElements());
+
+        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        {
+            var tabControl = new TabControl();
+            tabControl.TabStripPlacement = TabStripPlacement;
+            tabControl.MinHeight = MinHeight.HasValue ? MinHeight.Value : tabControl.MinHeight;
+            tabControl.MaxHeight = MaxHeight.HasValue ? MaxHeight.Value : tabControl.MaxHeight;
+
+            foreach (var tabItem in TabItems)
+            {
+                var tab = new TabItem()
+                {
+                    Header = tabItem.Header,
+                    Content = tabItem.Build(elementBuilder)
+                };
+
+                tabControl.Items.Add(tab);
+            }
+
+            return tabControl;
+        }
+    }
+
+    internal class TabItemLayout : ILayout
+    {
+        public TabItemLayout(string header, ILayout child)
+        {
+            Header = header;
+            Child = child;
+        }
+
+        public string Header { get; set; }
+
+        public ILayout Child { get; }
+
+        public IEnumerable<FormElement> GetElements() => Child.GetElements();
+
+        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        {
+            return Child.Build(elementBuilder);
+        }
+    }
+
     internal class GridColumnLayout : ILayout
     {
         public GridColumnLayout(ILayout child, double width, double left, double right)
