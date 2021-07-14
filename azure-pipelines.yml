@@ -33,6 +33,19 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    command: 'custom'
-    arguments: 'pack "Forge.Forms\src\Forge.Forms\Forge.Forms.csproj" -IncludeReferencedProjects -Version "$(Version)" -Properties id=Forge.Forms.aalex675'
+    command: 'pack'
+    packagesToPack: '**/Forge.Forms.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'Version'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
