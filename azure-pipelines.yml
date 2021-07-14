@@ -34,7 +34,8 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/Forge.Forms.aalex675.csproj'
+    packagesToPack: '**/Forge.Forms.csproj'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'Version'
+    buildProperties: 'id=Forge.Forms.aalex675'
 
