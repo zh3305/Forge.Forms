@@ -41,10 +41,6 @@
     <StartupObject>Forge.Forms.Demo.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Forge.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Forge.Application\src\Forge.Application\bin\Release\net461\Forge.Application.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -157,6 +153,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Forge.Application\Forge.Application.csproj">
+      <Project>{bd856108-08dd-4b1e-b540-2886c3434120}</Project>
+      <Name>Forge.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Forge.Forms\Forge.Forms.csproj">
       <Project>{4e0c323d-5afc-4105-815f-587346aa5321}</Project>
       <Name>Forge.Forms</Name>
