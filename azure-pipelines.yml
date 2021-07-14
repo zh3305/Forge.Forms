@@ -37,13 +37,12 @@ steps:
     packagesToPack: '**/Forge.Forms.csproj'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'Version'
-    
+
 - task: NuGetCommand@2
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: $(NugetKey)
+    publishFeedCredentials: 'https://api.nuget.org/v3/index.json'
     externalFeedCredentials: $(NugetKey)
     includeNuGetOrg: true
-
