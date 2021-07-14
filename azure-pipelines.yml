@@ -7,7 +7,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: '**/Forge.Forms.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
