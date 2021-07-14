@@ -33,9 +33,6 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    command: 'pack'
-    packagesToPack: '**/Forge.Forms.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'Version'
-    buildProperties: 'id=Forge.Forms.aalex675'
+    command: 'custom'
+    arguments: 'pack "**/Forge.Forms.csproj" -IncludeReferencedProjects -Version "$(Version)" -Properties id=Forge.Forms.aalex675'
 
