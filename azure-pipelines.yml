@@ -34,13 +34,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/Forge.Forms.csproj'
+    packagesToPack: '**/Forge.Forms.aalex675.csproj'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'Version'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'nuget.org'
