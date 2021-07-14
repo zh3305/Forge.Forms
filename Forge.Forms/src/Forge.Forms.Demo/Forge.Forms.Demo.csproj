@@ -157,9 +157,9 @@
       <Project>{bd856108-08dd-4b1e-b540-2886c3434120}</Project>
       <Name>Forge.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Forge.Forms\Forge.Forms.aalex675.csproj">
+    <ProjectReference Include="..\Forge.Forms\Forge.Forms.csproj">
       <Project>{4e0c323d-5afc-4105-815f-587346aa5321}</Project>
-      <Name>Forge.Forms.aalex675</Name>
+      <Name>Forge.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

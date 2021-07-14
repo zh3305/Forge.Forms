@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forge.Forms.Demo", "src\Forge.Forms.Demo\Forge.Forms.Demo.csproj", "{9366F07D-D5DE-4B19-987C-B27C40476685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forge.Forms.aalex675", "src\Forge.Forms\Forge.Forms.aalex675.csproj", "{4E0C323D-5AFC-4105-815F-587346AA5321}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forge.Forms", "src\Forge.Forms\Forge.Forms.csproj", "{4E0C323D-5AFC-4105-815F-587346AA5321}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forge.Forms.Tests", "src\Forge.Forms.Tests\Forge.Forms.Tests.csproj", "{528FBDC1-500C-4C3B-AD72-F8FB49E778FE}"
 EndProject
