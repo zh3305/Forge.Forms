@@ -2,7 +2,7 @@
     x:Class="Forge.Forms.Demo.Views.XmlExamplesView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Forge.Forms.Controls;assembly=Forge.Forms"
+    xmlns:controls="clr-namespace:Forge.Forms.Controls;assembly=Forge.Forms.aalex675"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:infrastructure="clr-namespace:Forge.Forms.Demo.Infrastructure"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

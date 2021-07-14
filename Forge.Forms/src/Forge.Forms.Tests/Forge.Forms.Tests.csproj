@@ -66,9 +66,9 @@
       <Project>{9366f07d-d5de-4b19-987c-b27c40476685}</Project>
       <Name>Forge.Forms.Demo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Forge.Forms\Forge.Forms.csproj">
+    <ProjectReference Include="..\Forge.Forms\Forge.Forms.aalex675.csproj">
       <Project>{4e0c323d-5afc-4105-815f-587346aa5321}</Project>
-      <Name>Forge.Forms</Name>
+      <Name>Forge.Forms.aalex675</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
