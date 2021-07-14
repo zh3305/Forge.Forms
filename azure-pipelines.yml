@@ -33,7 +33,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/Forge.Forms.csproj'
-    versioningScheme: 'off'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'Version'
     
 - task: NuGetCommand@2
   inputs:
