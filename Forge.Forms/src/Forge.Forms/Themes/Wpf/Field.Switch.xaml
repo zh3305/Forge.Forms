@@ -7,7 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Wpf/IconStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Wpf/IconStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="WpfSwitchPresenterTemplate" TargetType="{x:Type defaults:SwitchPresenter}">

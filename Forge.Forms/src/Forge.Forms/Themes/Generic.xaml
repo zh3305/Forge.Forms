@@ -7,9 +7,9 @@
     xmlns:internal="clr-namespace:Forge.Forms.Controls.Internal"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Elements/Text.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Elements/Image.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Forge.Forms;component/Themes/Wpf.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Elements/Text.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Elements/Image.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Wpf.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="defaults:DirectContentPresenter">
