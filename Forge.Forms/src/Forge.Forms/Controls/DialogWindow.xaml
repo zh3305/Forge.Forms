@@ -13,8 +13,8 @@
     BorderThickness="0"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     FontSize="{Binding TextFontSize}"
-    Foreground="{DynamicResource MaterialDesignBody}"
-    Background="{DynamicResource MaterialDesignPaper}"
+    Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
     GlowBrush="Black"
     ShowCloseButton="{Binding ShowCloseButton}"
     ShowMaxRestoreButton="{Binding ShowMaxRestoreButton}"
@@ -29,9 +29,6 @@
             <controls:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter" />
         </ResourceDictionary>
     </metro:MetroWindow.Resources>
-    <!--<metro:MetroWindow.Style>
-        <StaticResource ResourceKey="MahApps.Styles.MetroWindow.Clean" />
-    </metro:MetroWindow.Style>-->
     <metro:MetroWindow.ResizeMode>
         <Binding Converter="{StaticResource BoolToResizeModeConverter}" Path="CanResize" />
     </metro:MetroWindow.ResizeMode>
