@@ -22,13 +22,15 @@
     ShowTitleBar="False"
     SizeToContent="Height"
     TextOptions.TextFormattingMode="Ideal"
-    TextOptions.TextRenderingMode="Auto"
-    WindowStartupLocation="CenterOwner">
+    TextOptions.TextRenderingMode="Auto">
     <metro:MetroWindow.Resources>
         <ResourceDictionary>
             <controls:BoolToResizeModeConverter x:Key="BoolToResizeModeConverter" />
         </ResourceDictionary>
     </metro:MetroWindow.Resources>
+    <!--<metro:MetroWindow.Style>
+        <StaticResource ResourceKey="MahApps.Styles.MetroWindow.Clean" />
+    </metro:MetroWindow.Style>-->
     <metro:MetroWindow.ResizeMode>
         <Binding Converter="{StaticResource BoolToResizeModeConverter}" Path="CanResize" />
     </metro:MetroWindow.ResizeMode>

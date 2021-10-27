@@ -1,4 +1,6 @@
-﻿namespace Forge.Forms
+﻿using System.Windows;
+
+namespace Forge.Forms
 {
     public class WindowOptions : DialogOptions
     {
@@ -7,6 +9,8 @@
         private bool showCloseButton;
         private bool showMaxRestoreButton = true;
         private bool showMinButton;
+        private WindowStartupLocation windowStartupLocation;
+        private Window owner;
 
         private string title = "Dialog";
 
@@ -28,6 +32,8 @@
             showMaxRestoreButton = defaults.showMaxRestoreButton;
             showCloseButton = defaults.showCloseButton;
             canResize = defaults.canResize;
+            windowStartupLocation = defaults.windowStartupLocation;
+            owner = defaults.owner;
         }
 
         public bool TopMost { get;set; }
@@ -105,6 +111,36 @@
                 }
 
                 canResize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public WindowStartupLocation WindowStartupLocation
+        {
+            get => windowStartupLocation;
+            set
+            {
+                if (value == windowStartupLocation)
+                {
+                    return;
+                }
+
+                windowStartupLocation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Window Owner
+        {
+            get => owner;
+            set
+            {
+                if (value == owner)
+                {
+                    return;
+                }
+
+                owner = value;
                 OnPropertyChanged();
             }
         }

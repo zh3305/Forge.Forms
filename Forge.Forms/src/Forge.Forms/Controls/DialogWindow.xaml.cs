@@ -14,6 +14,12 @@ namespace Forge.Forms.Controls
         {
             this.options = options;
             DataContext = options;
+            this.WindowStartupLocation = options.WindowStartupLocation;
+            if (options.WindowStartupLocation == System.Windows.WindowStartupLocation.CenterOwner)
+            {
+                this.Owner = options.Owner;
+            }
+
             InitializeComponent();
             Loaded += DialogWindow_Loaded;
             Form.Environment.Add(options.EnvironmentFlags);
