@@ -618,7 +618,8 @@ namespace Forge.Forms.FormBuilding
                     Utilities.ParseNullableDouble(element.TryGetAttribute("maxHeight")),
                     element.TryGetAttribute("tabHeaderMargin"),
                     Utilities.TryParse<HorizontalAlignment>(element.TryGetAttribute("tabHeaderHorizontalAlignment"), HorizontalAlignment.Left),
-                    Utilities.ParseNullableDouble(element.TryGetAttribute("tabHeaderFontSize")));
+                    Utilities.ParseNullableDouble(element.TryGetAttribute("tabHeaderFontSize")),
+                    element.TryGetAttribute("tabHeaderHeight"));
             }
 
             ILayout Row(XElement element)
