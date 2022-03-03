@@ -615,7 +615,10 @@ namespace Forge.Forms.FormBuilding
                     element.Elements().Select(TabItem),
                     Utilities.TryParse<Dock>(element.TryGetAttribute("tabStripPlacement"), Dock.Top),
                     Utilities.ParseNullableDouble(element.TryGetAttribute("minHeight")),
-                    Utilities.ParseNullableDouble(element.TryGetAttribute("maxHeight")));
+                    Utilities.ParseNullableDouble(element.TryGetAttribute("maxHeight")),
+                    element.TryGetAttribute("tabHeaderMargin"),
+                    Utilities.TryParse<HorizontalAlignment>(element.TryGetAttribute("tabHeaderHorizontalAlignment"), HorizontalAlignment.Left),
+                    Utilities.ParseNullableDouble(element.TryGetAttribute("tabHeaderFontSize")));
             }
 
             ILayout Row(XElement element)
