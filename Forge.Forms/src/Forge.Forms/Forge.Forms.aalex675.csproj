@@ -105,7 +105,6 @@
     <Compile Include="Annotations\ValidationAction.cs" />
     <Compile Include="Annotations\ValueAttribute.cs" />
     <Compile Include="Annotations\Position.cs" />
-    <Compile Include="AttachedProperties\TabControlAP.cs" />
     <Compile Include="Behaviors\IEventContext.cs" />
     <Compile Include="Behaviors\IModelChangedBehavior.cs" />
     <Compile Include="Behaviors\IPropertyChangedBehavior.cs" />

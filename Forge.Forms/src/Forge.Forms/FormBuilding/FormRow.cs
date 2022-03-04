@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Forge.Forms.AttachedProperties;
 using Forge.Forms.Controls.Internal;
 using MaterialDesignExtensions.Controls;
 
@@ -230,8 +229,7 @@ namespace Forge.Forms.FormBuilding
             double? maxHeight,
             string tabHeaderMargin,
             HorizontalAlignment tabHeaderHorizontalAlignment,
-            double? tabHeaderFontSize,
-            string tabHeaderHeight)
+            double? tabHeaderFontSize)
         {
             TabItems = tabItems?.ToList() ?? new List<TabItemLayout>(0);
             TabStripPlacement = tabStripPlacement;
@@ -240,7 +238,6 @@ namespace Forge.Forms.FormBuilding
             TabHeaderMargin = tabHeaderMargin;
             TabHeaderHorizontalAlignment = tabHeaderHorizontalAlignment;
             TabHeaderFontSize = tabHeaderFontSize;
-            TabHeaderHeight = tabHeaderHeight;
         }
 
         public List<TabItemLayout> TabItems { get; set; }
@@ -250,7 +247,6 @@ namespace Forge.Forms.FormBuilding
         public string TabHeaderMargin { get; set; }
         public HorizontalAlignment TabHeaderHorizontalAlignment { get; set; }
         public double? TabHeaderFontSize { get; set; }
-        public string TabHeaderHeight { get; set; }
 
         public IEnumerable<FormElement> GetElements() => TabItems.SelectMany(c => c.GetElements());
 
@@ -272,12 +268,6 @@ namespace Forge.Forms.FormBuilding
             }
 
             TabControlAssist.SetTabHeaderHorizontalAlignment(tabControl, TabHeaderHorizontalAlignment);
-
-            if (string.IsNullOrWhiteSpace(TabHeaderHeight) == false)
-            {
-                var height = (GridLength)gridLengthConverter.ConvertFrom(TabHeaderHeight);
-                TabControlAP.SetHeaderHeight(tabControl, height);
-            }
 
             foreach (var tabItem in TabItems)
             {
