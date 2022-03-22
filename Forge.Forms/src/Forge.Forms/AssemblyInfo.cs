@@ -5,8 +5,6 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyDescription("Dynamically generated forms and dialogs in WPF, fork by aalex675")]
-[assembly: AssemblyCopyright("Portions Copyright © aalex675 2021, Portions Copyright © WPF-Forge 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
