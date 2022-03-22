@@ -38,9 +38,9 @@ steps:
     InsertAttributes: false
     FileEncoding: 'auto'
     WriteBOM: false
-    VersionNumber: ${Version}
-    FileVersionNumber: ${Version}
-    PackageVersion: ${Version}
+    VersionNumber: '$(Version)'
+    FileVersionNumber: '$(Version)'
+    PackageVersion: '$(Version)'
     LogLevel: 'verbose'
     FailOnWarning: false
     DisableTelemetry: false
