@@ -38,8 +38,6 @@ steps:
     InsertAttributes: false
     FileEncoding: 'auto'
     WriteBOM: false
-    GenerateDocumentationFile: 'true'
-    GeneratePackageOnBuild: 'true'
     VersionNumber: $Version
     FileVersionNumber: $Version
     PackageVersion: $Version
