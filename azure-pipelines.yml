@@ -34,7 +34,7 @@ steps:
 - task: Assembly-Info-NetCore@3
   inputs:
     Path: '$(Build.SourcesDirectory)'
-    FileNames: '**/Forge.Forms.aaelx675.csproj'
+    FileNames: '**/Forge.Forms.aalex675.csproj'
     InsertAttributes: false
     FileEncoding: 'auto'
     WriteBOM: false
