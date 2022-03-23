@@ -38,9 +38,9 @@ steps:
     InsertAttributes: false
     FileEncoding: 'auto'
     WriteBOM: false
-    VersionNumber: $Version
-    FileVersionNumber: $Version
-    PackageVersion: $Version
+    VersionNumber: '$(Version)'
+    FileVersionNumber: '$(Version)'
+    PackageVersion: '$(Version)'
     LogLevel: 'verbose'
     FailOnWarning: false
     DisableTelemetry: false
@@ -78,6 +78,6 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: '**/Forge.Forms.aalex675.*.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'nuget.org'
