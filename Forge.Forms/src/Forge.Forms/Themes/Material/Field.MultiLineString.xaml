@@ -9,6 +9,12 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Forge.Forms.aalex675;component/Themes/Material/IconStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Cyan.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Cyan.xaml" />
+
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="MaterialMultiLineStringPresenterTemplate" TargetType="{x:Type defaults:MultiLineStringPresenter}">
@@ -38,7 +44,7 @@
                 IsEnabled="{formBuilding:FormBinding IsEnabled}"
                 IsReadOnly="{formBuilding:FormBinding IsReadOnly}"
                 MinLines="3"
-                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                Style="{DynamicResource  MaterialDesignOutlinedTextFieldTextBox}"
                 Text="{formBuilding:FormBinding Value}"
                 TextWrapping="Wrap"
                 ToolTip="{formBuilding:FormBinding ToolTip}" />

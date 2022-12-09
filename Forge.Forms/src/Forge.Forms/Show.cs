@@ -170,8 +170,7 @@ namespace Forge.Forms
                     lastAction = e.ActionContext.Action;
                     lastActionParameter = e.ActionContext.ActionParameter;
                 };
-
-                await DialogHost.Show(wrapper, dialogIdentifier);
+                await DialogHost.Show(wrapper, dialogIdentifier?? "RouteController1");
                 return new DialogResult(wrapper.Form.Value, lastAction, lastActionParameter);
             }
         }
