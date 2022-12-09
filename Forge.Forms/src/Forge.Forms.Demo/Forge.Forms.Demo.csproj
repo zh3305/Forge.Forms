@@ -32,9 +32,13 @@
 
 	<ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
-
+	<ItemGroup>
+		<None Include="captcha.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Forge.Application\Forge.Application.csproj" />
     <ProjectReference Include="..\Forge.Forms\Forge.Forms.aalex675.csproj" />
