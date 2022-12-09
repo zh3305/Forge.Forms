@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Forge.Forms.Controls.Internal;
+using MaterialDesignExtensions.Controls;
 
 namespace Forge.Forms.FormBuilding
 {
@@ -213,6 +214,93 @@ namespace Forge.Forms.FormBuilding
             }
 
             return scrollViewer;
+        }
+    }
+
+    internal class TabLayout : ILayout
+    {
+        private static ThicknessConverter thicknessConverter = new ThicknessConverter();
+        private static GridLengthConverter gridLengthConverter = new GridLengthConverter();
+
+        public TabLayout(
+            IEnumerable<TabItemLayout> tabItems,
+            Dock tabStripPlacement,
+            double? minHeight,
+            double? maxHeight,
+            string tabHeaderMargin,
+            HorizontalAlignment tabHeaderHorizontalAlignment,
+            double? tabHeaderFontSize)
+        {
+            TabItems = tabItems?.ToList() ?? new List<TabItemLayout>(0);
+            TabStripPlacement = tabStripPlacement;
+            MinHeight = minHeight;
+            MaxHeight = maxHeight;
+            TabHeaderMargin = tabHeaderMargin;
+            TabHeaderHorizontalAlignment = tabHeaderHorizontalAlignment;
+            TabHeaderFontSize = tabHeaderFontSize;
+        }
+
+        public List<TabItemLayout> TabItems { get; set; }
+        public Dock TabStripPlacement { get; set; }
+        public double? MinHeight { get; set; }
+        public double? MaxHeight { get; set; }
+        public string TabHeaderMargin { get; set; }
+        public HorizontalAlignment TabHeaderHorizontalAlignment { get; set; }
+        public double? TabHeaderFontSize { get; set; }
+
+        public IEnumerable<FormElement> GetElements() => TabItems.SelectMany(c => c.GetElements());
+
+        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        {
+            var tabControl = new TabControl();
+            tabControl.TabStripPlacement = TabStripPlacement;
+            tabControl.MinHeight = MinHeight.HasValue ? MinHeight.Value : tabControl.MinHeight;
+            tabControl.MaxHeight = MaxHeight.HasValue ? MaxHeight.Value : tabControl.MaxHeight;
+            if (string.IsNullOrWhiteSpace(TabHeaderMargin) == false)
+            {
+                var margin = (Thickness)thicknessConverter.ConvertFromString(TabHeaderMargin);
+                TabControlAssist.SetTabHeaderMargin(tabControl, margin);
+            }
+
+            if (TabHeaderFontSize != null)
+            {
+                TabControlAssist.SetTabHeaderFontSize(tabControl, TabHeaderFontSize.Value);
+            }
+
+            TabControlAssist.SetTabHeaderHorizontalAlignment(tabControl, TabHeaderHorizontalAlignment);
+
+            foreach (var tabItem in TabItems)
+            {
+                var tab = new TabItem()
+                {
+                    Header = tabItem.Header,
+                    Content = tabItem.Build(elementBuilder)
+                };
+
+                tabControl.Items.Add(tab);
+            }
+
+            return tabControl;
+        }
+    }
+
+    internal class TabItemLayout : ILayout
+    {
+        public TabItemLayout(string header, ILayout child)
+        {
+            Header = header;
+            Child = child;
+        }
+
+        public string Header { get; set; }
+
+        public ILayout Child { get; }
+
+        public IEnumerable<FormElement> GetElements() => Child.GetElements();
+
+        public FrameworkElement Build(Func<FormElement, FrameworkElement> elementBuilder)
+        {
+            return Child.Build(elementBuilder);
         }
     }
 

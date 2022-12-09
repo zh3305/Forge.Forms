@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Forge.Forms.Tests</RootNamespace>
     <AssemblyName>Forge.Forms.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,13 +59,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Forge.Forms.Demo\Forge.Forms.Demo.csproj">
-      <Project>{9366f07d-d5de-4b19-987c-b27c40476685}</Project>
+      <Project>{2504564a-15e1-4e23-aaf8-131d261a20c1}</Project>
       <Name>Forge.Forms.Demo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Forge.Forms\Forge.Forms.csproj">
-      <Project>{703572ce-5a7e-4b37-9f12-ff9a11483de2}</Project>
-      <Name>Forge.Forms</Name>
+    <ProjectReference Include="..\Forge.Forms\Forge.Forms.aalex675.csproj">
+      <Project>{ca892642-cfd8-4d95-b5c3-16d3f9daab2a}</Project>
+      <Name>Forge.Forms.aalex675</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

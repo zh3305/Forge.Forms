@@ -28,11 +28,4 @@ namespace Forge.Forms.Demo.Models
             LastName = "Doe"
         };
     }
-
-    public class CustomContent
-    {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-    }
 }
