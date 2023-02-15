@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -34,6 +35,10 @@ namespace Forge.Forms.Validation
             if (Argument.Value is IEnumerable<object> e)
             {
                 return e.Contains(value);
+            }
+            else if(Argument.Value is Array a)
+            {
+                return a.Cast<object>().Contains(value);
             }
 
             return true;
